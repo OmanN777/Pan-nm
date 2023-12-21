@@ -1,0 +1,74 @@
+
+#navbar {
+    display: flex;
+    align-items: center;
+    padding: auto;
+    max-width: 1300px;
+    margin: auto;
+}
+nav{
+    float: right;
+    flex: 1;
+    text-align: right;
+    list-style: none;
+}
+nav ul {
+    display: inline-block;
+}
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+a{
+    color: #727272;
+    text-decoration: none;
+}
+a:hover{
+    color: black;
+}
+
+h1 {
+    color: rgb(0, 0, 0);
+    margin: auto;
+    padding: 10px 10px 10px;
+    text-align: center;
+    height: 10px;
+}
+
+.members-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.member {
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    height: 500px;
+}
+
+.member img {
+    border-radius: 50%;
+    max-width: 70%; /* ไม่เกินขนาดของ .member */
+    max-height: 70%; /* ไม่เกินขนาดของ .member */
+}
+
+.member a {
+    text-decoration: none;
+    color: #e6003a;
+    display: block;
+    margin: 5px;
+}
+
+.member a:hover {
+    text-decoration: underline;
+}
+

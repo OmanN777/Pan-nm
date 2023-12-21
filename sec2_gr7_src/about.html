@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="Css7.css">
+</head>
+<body>
+
+        <div id="navbar">
+            <div id="logo">
+
+                <img src="pannmbg.png" width="125px">
+            </div>
+            <nav>
+                <ul>
+                    <h4>
+                        <li><a href="homepage">Home</a></li>
+                        <li><a href="about">About us</a></li>
+                        <li><a href="account">Account</a></li>
+                        <li><a href="result">Search🔍︎</a></li>
+<li><button onclick="logout()">Logout</button></li>
+<script>
+    function isLoggedIn() {
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        return loggedInUser !== null;
+    }
+    function logout() {
+        localStorage.removeItem('loggedInUser');
+        window.location.href = '/login';
+    }
+</script>
+                    </h4>
+                </ul>
+            </nav>
+        </div>
+
+    <h1>About Us</h1>
+
+    <div class="members-container">
+        <!-- Member 1 -->
+        <div class="member">
+            <img src="Meen2.jpg" alt="Thanrak Thongsomboon">
+            <h2>6587002 Thanrak Thongsomboon</h2>
+            <h4>Meen</h4>
+            <a href="mailto:Thanrak.tho@student.mahidol.edu">Email</a>
+            <a href="https://www.instagram.com/m.nhm_/">Instagram</a>
+        </div>
+
+        <!-- Member 2 -->
+        <div class="member">
+            <img src="Namo.jpg" alt="Natawat Tephassadin na ayutaya">
+            <h2>6587019 Natawat Tephassadin na ayutaya</h2>
+            <h4>Namo</h4>
+            <a href="mailto:natawat.tep@student.mahidol.edu">Email</a>
+            <a href="https://www.instagram.com/nawt.omann/">Instagram</a>
+        </div>
+
+        <!-- Member 3 -->
+        <div class="member">
+            <img src="Auto.jpg" alt="Sirawich Luengpaitoon">
+            <h2>6587039 Sirawich Luengpaitoon</h2>
+            <h4>Auto</h4>
+            <a href="mailto:sirawich.lue@student.mahidol.edu">Email</a>
+            <a href="https://www.instagram.com/sirawichauto/">Instagram</a>
+        </div>
+
+        <!-- Member 4 -->
+        <div class="member">
+            <img src="Pun.jpg" alt="Punyaphat Waleesuksan">
+            <h2>6587059  Punyaphat Waleesuksan</h2>
+            <h4>Pun</h4>
+            <a href="mailto:punyaphat.wal@student.mahidol.edu">Email</a>
+            <a href="https://www.instagram.com/punny_pun.w/">Instagram</a>
+        </div>
+
+        <!-- Member 5 -->
+        <div class="member">
+            <img src="Nice.jpg" alt="Supanut baromsatid">
+            <h2>6587102 Supanut baromsatid</h2>
+            <h4>Nice</h4>
+            <a href="mailto:supanut.bar@student.mahidol.edu">Email</a>
+            <a href="https://www.instagram.com/nicesupanut/">Instagram</a>
+        </div>
+    </div>
+</body>
+</html>

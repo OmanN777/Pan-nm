@@ -1,0 +1,78 @@
+body {
+    font-family: sans-serif;
+}
+
+header,
+footer {
+    background-color: #2E4053;
+    text-align: center;
+    color: #F8F9F9;
+}
+
+h1 {
+    padding: 20px;
+    margin-bottom: 0px;
+}
+
+nav {
+    background-color: #5D6D7E;
+    margin: 0px;
+    overflow: hidden;
+
+    /* Hint: Put your Flex CSS code here to organize each menu */
+    
+
+}
+
+nav a {
+    display: block;
+    float: left;
+    color: #FDFEFE;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #D2B4DE;
+}
+
+.container {
+    padding: 10px;
+
+    /* Hint: Put your Flex CSS code here to organize each section */
+    
+   
+}
+
+.column {
+    padding: 20px;
+    margin: 10px;
+    border-radius: 20px;
+    background-color: #ECF0F1;
+    border: solid #95A5A6 2px;
+}
+
+.dummy_box {
+    margin: auto;
+    margin-top: 10px;
+    width: 100%;
+    height: 200px;
+    border-radius: 20px;
+}
+
+.pink {
+    background-color: #F5B7B1;
+}
+
+.green {
+    background-color: #82E0AA;
+}
+
+.orange {
+    background-color: #F5B041;
+}
+
+.dummy_text {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

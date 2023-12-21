@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Search Page</title>
+</head>
+<body>
+    <div id="navbar">
+        <div id="logo">
+            <img src="pannmbg.png" width="125px">
+        </div>
+        <nav>
+            <ul>
+                <h4>
+                    <li><a href="homepage">Home</a></li>
+                    <li><a href="about">About us</a></li>
+                    <li><a href="account">Account</a></li>
+                    <li><a href="result">Search🔍︎</a></li>
+<li><button onclick="logout()">Logout</button></li>
+<script>
+    function isLoggedIn() {
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        return loggedInUser !== null;
+    }
+    function logout() {
+        localStorage.removeItem('loggedInUser');
+        window.location.href = '/login';
+    }
+</script>
+                </h4>
+            </ul>
+        </nav>
+    </div>
+           
+    <div class="search-box">
+        <form action="result" >
+            <input class="search-input" type="text" placeholder="Search...">
+            <button class="search-button" type="submit">Search</button>
+        </form>
+    </div>
+    <div class="fillter-box">
+        <form class="criteria">
+                <label><input type="radio" id="nike" name="Brand" value="nike"> เสื้อยืด</label><br>
+                <label><input type="radio" id="adidas" name="Brand" value="adidas"> เสื้อแขนยาว</label><br>
+                <label><input type="radio" id="puma" name="Brand" value="puma"> เสื้อแขนกุด</label><br>
+        </form>
+        <form class="criteria">
+            <label><input type="radio" id="0-2k" name="price" value="2k"> $0-$2K</label><br>
+            <label><input type="radio" id="2k-4k" name="price" value="4k"> $2K-$4K</label><br>
+            <label><input type="radio" id="4k-6k" name="price" value="6k"> $4K-$6K</label><br>
+        </form>
+        <form class="criteria">
+            <label><input type="radio" id="black" name="Color" value="black"> Black</label><br>
+            <label><input type="radio" id="white" name="Color" value="white"> White</label><br>
+            <label><input type="radio" id="red" name="Color" value="red"> Red</label><br>
+        </form>
+        
+    </div>
+    
+</body>
+</html>

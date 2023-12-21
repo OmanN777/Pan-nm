@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <title>PAN NM Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>PAN NM Login</h2>
+        <form class="login-form" action="#" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button onclick="login()">Login</button>
+        </form>
+
+        <a href="homepage">ย้อนกลับ</a>
+    </div>
+</body>
+<script>
+    function login() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: username, password: password }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Login successful') {
+                    localStorage.setItem('loggedInUser', JSON.stringify(data.user));
+                    // Redirect to dashboard or perform any other action
+                    console.log('Login successful:', data.message);
+                    alert('Login successful');
+                    // window.location.href = '/dashboard'; // Redirect to dashboard page
+                    window.location.href = '/'; 
+                } else {
+                    // Handle unsuccessful login
+                    console.log('Login failed:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+</html>

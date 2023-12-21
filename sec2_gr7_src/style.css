@@ -1,0 +1,121 @@
+*{
+    margin: 0;
+    padding: 0;
+    
+}
+#header{
+    background: radial-gradient(#fff,rgb(235, 234, 234));
+}
+#navbar {
+    display: flex;
+    align-items: center;
+    padding: auto;
+    max-width: 1300px;
+    margin: auto;
+}
+nav{
+    flex: 1;
+    text-align: right;
+    list-style: none;
+}
+nav ul {
+    display: inline-block;
+}
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+a{
+    color: #727272;
+    text-decoration: none;
+}
+a:hover{
+    color: black;
+}
+.search-box {
+    text-align: center;
+    height: 60px;
+    border-radius: 5px;
+}
+.search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-color: #000;
+}
+.search-button {
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+
+}
+.search-button:hover{
+    background-color: whitesmoke;
+    color: #000;
+}
+.fillter-box{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.criteria {
+    text-align: center;
+    align-items: center;
+    background-color: #333333;
+    height: 150px;
+    width: 250px;
+    border-style: solid;
+    border-width: 0.5px;
+    border-top: none;
+}
+.criteria input{
+    margin: 15px;
+}
+form.sell.item{
+    width: 150px;
+    height: 200px;
+    padding: 40px;
+    margin-right: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: rgb(245, 237, 237);
+}
+.List.Item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px 20px;
+}
+.button {
+    background-color: #000;
+    border: 2px solid ;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.criteria label{
+    color: whitesmoke;
+}
+.picture{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px 20px;
+}

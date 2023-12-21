@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="product.css" />
+
+</head>
+
+<body>
+  <div id="navbar">
+    <div id="logo">
+      <img src="pannmbg.png" width="125px">
+    </div>
+    <nav>
+      <ul>
+        <h4>
+          <li><a href="homepage">Home</a></li>
+          <li><a href="about">About us</a></li>
+          <li><a href="account">Account</a></li>
+          <li><a href="result">Search🔍︎</a></li>
+          <li><button onclick="logout()">Logout</button></li>
+          <script>
+            function isLoggedIn() {
+              const loggedInUser = localStorage.getItem('loggedInUser');
+              return loggedInUser !== null;
+            }
+            function logout() {
+              localStorage.removeItem('loggedInUser');
+              window.location.href = '/login';
+            }
+          </script>
+        </h4>
+      </ul>
+    </nav>
+  </div>
+  <main class="container">
+
+    <div class="left-column">
+      <img data-image="Black" src="black-t.png" alt="">
+      <img data-image="blue" src="blue-t.png" alt="">
+      <img data-image="red" class="active" src="red-t.png" alt="">
+    </div>
+
+    <div class="right-column">
+
+      <div class="product-description">
+        <span id="ptype">Black T-Shirts</span>
+        <h1 id="pname">PANNM First Edition</h1>
+        <p id="pdesc">เป็นเสื้อยืด collection เเรกของ PANNM ที่มาพร้อมกับความเรียบง่ายใส่ได้ทุกสถานที่เเละ
+          มีเนื้อผ้าที่มีคว่มใส่สบายเเละยืดหยุ่น คุณภาพดีทำจากผ้า cotton 100%</p>
+      </div>
+
+      <div class="product-configuration">
+
+        <div class="product-color">
+          <span>Color</span>
+
+          <div id="pcolor" class="p-2" style="width: 50px;height: 50px;border-radius: 20px;background-color: red;">
+            <input type="text" id="pcolorInput" value="" style="display: none;">
+          </div>
+          <div class="product-price">
+            <span id="pprice">200 บาท</span>
+            <a href="#" class="cart-btn">Add to cart</a>
+          </div>
+        </div>
+  </main>
+</body>
+<footer>
+  <a onclick="showUpdate()" class="button">Edit</a>
+</footer>
+
+<script>
+  let isEditing = false;
+  var Product_detail = {}
+  async function fetchProductById(productId) {
+    try {
+      const response = await fetch(`/api/products/${productId}`);
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok.');
+      }
+
+      const data = await response.json();
+      return data.product; // You can process the returned data here or return it to the caller
+    } catch (error) {
+      console.error('There was a problem fetching the product:', error);
+      throw error; // Propagate the error to the caller if needed
+    }
+  }
+  function getProductIdFromURL() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    return urlParams.get('id');
+  }
+  const productId = getProductIdFromURL()
+  fetchProductById(productId)
+    .then((productData) => {
+      console.log(productData);
+      Product_detail = productData;
+      document.getElementById('ptype').innerHTML = productData.type_product;
+      document.getElementById('pname').innerText = productData.product_name;
+      document.getElementById('pdesc').innerText = productData.description;
+      document.getElementById('pprice').innerText = productData.price;
+      document.getElementById('pcolorInput').value = productData.color;
+      document.getElementById('pcolor').style.backgroundColor = productData.color;
+
+    })
+    .catch((error) => {
+      console.error('Error fetching product:', error);
+    });
+
+
+  function showUpdate() {
+    const typeProductElement = document.getElementById('ptype');
+    const productNameElement = document.getElementById('pname');
+    const productDescElement = document.getElementById('pdesc');
+    const productPriceElement = document.getElementById('pprice');
+    const productColorElement = document.getElementById('pcolorInput');
+
+    if (!isEditing) { // If not editing, switch to edit mode
+      typeProductElement.innerHTML = `<input type="text" id="ptypeInput" value="${Product_detail.type_product}">`;
+      productNameElement.innerHTML = `<input type="text" id="pnameInput" value="${Product_detail.product_name}">`;
+      productDescElement.innerHTML = `<textarea row="5" type="text" id="pdescInput" value="${Product_detail.description}">${Product_detail.description}</textarea>`;
+      productPriceElement.innerHTML = `<input type="text" id="ppriceInput" value="${Product_detail.price}">`;
+      //productColorElement.style.display = "block";
+
+      isEditing = true; // Update editing state
+    } else { // If already in edit mode, save the changes and switch back to display mode
+      Product_detail.type_product = document.getElementById('ptypeInput').value;
+      Product_detail.product_name = document.getElementById('pnameInput').value;
+      Product_detail.description = document.getElementById('pdescInput').value;
+      Product_detail.price = document.getElementById('ppriceInput').value;
+      Product_detail.color = document.getElementById('pcolorInput').value;
+
+      typeProductElement.innerText = Product_detail.type_product;
+      productNameElement.innerText = Product_detail.product_name;
+      productDescElement.innerText = Product_detail.description;
+      productPriceElement.innerText = Product_detail.price;
+      // productColorElement.style.display = "none";
+
+      const productIdToUpdate = Product_detail.product_id;
+      const updatedProductData = {
+        product_name: Product_detail.product_name,
+        description: Product_detail.description,
+        price: parseFloat(Product_detail.price),
+        color_id: Product_detail.color_id,
+        type_product: Product_detail.type_product,
+      };
+      updateProduct(productIdToUpdate, updatedProductData);
+      isEditing = false;
+
+    }
+  }
+
+
+  function updateProduct(productId, productData) {
+    fetch(`/api/products/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(productData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to update product');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Product updated successfully:', data.message);
+        alert('Product updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating product:', error.message);
+        alert('Error updating product');
+      });
+  }
+</script>
+
+</html>

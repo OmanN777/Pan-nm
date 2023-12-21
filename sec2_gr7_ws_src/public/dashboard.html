@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<style>
+    .search-box {
+        padding: 10px;
+        border: 2px solid black;
+        border-radius: 5px;
+        margin: 10px;
+    }
+</style>
+
+<body>
+    <div id="navbar">
+        <div id="logo">
+            <img src="pannmbg.png" width="125px">
+        </div>
+        <nav>
+            <ul>
+                <h4>
+                    <li><a href="homepage">Home</a></li>
+                </h4>
+            </ul>
+        </nav>
+    </div>
+    <h1>Dashboard</h1>
+    <ul id="mid">
+        <li>
+            <h2>Seacrh</h2>
+            <input type="text" placeholder="กรอกชื่อผู้ใช้" id="username">
+            <button onclick="searchOnclick()">ค้นหา</button>
+            <div class="search-box" id="userres" style="display: none;">
+                <h3>ผลการค้นหา</h3>
+                <div id="search-result">
+                </div>
+            </div>
+        </li>
+        <li>
+            <h2>Add</h2>
+            <input type="text" placeholder="ชื่อผู้ใช้" id="usernameAdd">
+            <input type="password" placeholder="รหัสผ่าน" id="passwordAdd">
+            <input type="email" placeholder="อีเมล" id="emailAdd">
+            <button onclick="addOnclick()">เพิ่ม</button>
+
+        </li>
+        <li>
+            <h2>Delete</h2>
+            <input type="text" placeholder="ค้นหาชื่อผู้ใช้" id="usernameDel">
+            <button onclick="delOnclick()">ลบ</button>
+
+        </li>
+    </ul>
+</body>
+<script>
+    // Function to display search results
+    function displaySearchResultsUsers(users) {
+        const searchResult = document.getElementById('search-result');
+        searchResult.innerHTML = ''; // Clear previous search results
+
+        if (users.length === 0) {
+            searchResult.innerHTML = '<p>No users found.</p>';
+            return;
+        }
+
+        const userList = document.createElement('ul');
+        users.forEach(user => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+        <strong>User ID:</strong> ${user.user_id}<br>
+        <strong>Username:</strong> ${user.username}<br>
+        <strong>Email:</strong> ${user.email}<br>
+        <strong>Ranks:</strong> ${user.ranks}<br>
+        <strong>Telephone:</strong> ${user.telephone || 'N/A'}<br>
+        <strong>Firstname:</strong> ${user.firstname || 'N/A'}<br>
+        <strong>Lastname:</strong> ${user.lastname || 'N/A'}<br><br>
+      `;
+            userList.appendChild(listItem);
+        });
+
+        searchResult.appendChild(userList);
+    }
+    function searchOnclick() {
+        const username = document.getElementById('username').value;
+        searchUsers(username).then(users => {
+            console.log('Users found:', users);
+            document.getElementById('userres').style.display = 'block';
+            displaySearchResultsUsers(users);
+        }).catch(error => {
+            console.error('Error searching users:', error);
+            alert('Error searching users');
+        });
+
+    }
+    // Function to search users by keyword
+    async function searchUsers(keyword = '') {
+        try {
+            const response = await fetch(`/api/users/search/${keyword}`);
+            const data = await response.json();
+            return data.users;
+        } catch (error) {
+            console.error('Error searching users:', error);
+            return [];
+        }
+    }
+
+    // Function to add a new user
+    async function addUser(userData) {
+        try {
+            const response = await fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+            const data = await response.json();
+            return data.message;
+        } catch (error) {
+            console.error('Error adding user:', error);
+            return 'Failed to add user';
+        }
+    }
+
+    // Function to delete a user by username
+    async function deleteUser(username) {
+        try {
+            const response = await fetch(`/api/users/${username}`, {
+                method: 'DELETE'
+            });
+            const data = await response.json();
+            return data.message;
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            return 'Failed to delete user';
+        }
+    }
+
+    function addOnclick() {
+        const username = document.getElementById('usernameAdd').value;
+        const password = document.getElementById('passwordAdd').value;
+        const email = document.getElementById('emailAdd').value;
+        const userData = {
+            username: username,
+            password: password,
+            email: email
+        };
+        addUser(userData).then(message => {
+            console.log('Add user:', message);
+            alert('Add user successful');
+        }).catch(error => {
+            console.error('Error adding user:', error);
+            alert('Error adding user');
+        });
+    }
+
+    function delOnclick() {
+        const username = document.getElementById('usernameDel').value;
+        deleteUser(username).then(message => {
+            console.log('Delete user:', message);
+            alert('Delete user successful');
+        }).catch(error => {
+            console.error('Error deleting user:', error);
+            alert('Error deleting user');
+        });
+    }
+</script>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<style>
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-details {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .user-details img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-right: 20px;
+    }
+
+    .user-details h2 {
+        margin: 0;
+        color: #333;
+    }
+
+    .user-details p {
+        margin-top: 5px;
+        color: #666;
+    }
+</style>
+
+<body>
+    <div id="navbar">
+        <div id="logo">
+            <img src="pannmbg.png" width="125px">
+        </div>
+        <nav>
+            <ul>
+                <h4>
+                    <li><a href="homepage">Home</a></li>
+                    <li><a href="about">About us</a></li>
+                    <li><a href="account">Account</a></li>
+                    <li><a href="dashboard">Dashboard</a></li>
+                    <li><a href="result">Search🔍︎</a></li>
+                    <li><button onclick="logout()">Logout</button></li>
+                    <script>
+                        function isLoggedIn() {
+                            const loggedInUser = localStorage.getItem('loggedInUser');
+                            return loggedInUser !== null;
+                        }
+                        function logout() {
+                            localStorage.removeItem('loggedInUser');
+                            window.location.href = '/login';
+                        }
+                    </script>
+                </h4>
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <h1>User Account</h1>
+        <div class="user-details">
+            <div>
+                <p>Name:</p>
+                <h2><span id="fname"></span><span id="lname"></span></h2>
+                <p>Email:</p>
+                <h2 id="email">Email: johndoe@example.com</h2>
+                <p>Phone:</p>
+                <h2 id="phone">Location: New York, USA</h2>
+                <p>Rank:</p>
+                <h2 id="rank">Location: New York, USA</h2>
+                <!-- Add more user data as needed -->
+            </div>
+        </div>
+
+        <!-- Additional user data or sections can be added here -->
+
+    </div>
+</body>
+<script>
+    var loggedInUser = {};
+    function isLoggedIn() {
+        loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+        document.getElementById("fname").innerHTML = loggedInUser.firstname;
+        document.getElementById("lname").innerHTML = loggedInUser.lastname;
+        document.getElementById("email").innerHTML = loggedInUser.email;
+        document.getElementById("phone").innerHTML = loggedInUser.telephone;
+        document.getElementById("rank").innerHTML = loggedInUser.ranks;
+
+        return (loggedInUser !== null);
+    }
+
+    if (isLoggedIn()) {
+        console.log('User is logged in.');
+    } else {
+        console.log('User is not logged in.');
+        window.location.href = '/login';
+    }
+
+</script>
+
+</html>

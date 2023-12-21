@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Search Page</title>
+</head>
+
+<body>
+  <div id="navbar">
+    <div id="logo">
+      <img src="pannmbg.png" width="125px">
+    </div>
+    <nav>
+      <ul>
+        <h4>
+          <li><a href="homepage">Home</a></li>
+          <li><a href="about">About us</a></li>
+          <li><a href="account">Account</a></li>
+          <li><a href="result">Search🔍︎</a></li>
+          <li><button onclick="logout()">Logout</button></li>
+          <script>
+            function isLoggedIn() {
+              const loggedInUser = localStorage.getItem('loggedInUser');
+              return loggedInUser !== null;
+            }
+            function logout() {
+              localStorage.removeItem('loggedInUser');
+              window.location.href = '/login';
+            }
+          </script>
+        </h4>
+      </ul>
+    </nav>
+  </div>
+  <div class="search-box">
+
+    <input class="search-input" type="text" placeholder="Search...">
+    <button class="search-button" onclick="searchOnclick()">Search</button>
+
+  </div>
+  <div class="fillter-box">
+    <form class="criteria">
+      <label><input type="radio" id="nike" name="Brand" value="t-shirt">เสื้อยืด</label><br>
+      <label><input type="radio" id="adidas" name="Brand" value="adidas" color="longhand">เสื้อแขนยาว</label><br>
+      <label><input type="radio" id="puma" name="Brand" value="puma" color="shorthand">เสื้อแขนกุด</label><br>
+    </form>
+    <form class="criteria">
+      <label><input type="radio" id="0-2k" name="price" value="2k" color="whitesmoke"> $0-$2K</label><br>
+      <label><input type="radio" id="2k-4k" name="price" value="4k"> $2K-$4K</label><br>
+      <label><input type="radio" id="4k-6k" name="price" value="6k"> $4K-$6K</label><br>
+    </form>
+    <form class="criteria">
+      <label><input type="radio" id="red" name="Color" value="red"> Red</label><br>
+      <label><input type="radio" id="black" name="Color" value="black"> Black</label><br>
+      <label><input type="radio" id="white" name="Color" value="white"> White</label><br>
+    </form>
+  </div>
+  <div class="List Item" id="list-item">
+  </div>
+
+
+</body>
+<script>
+function searchOnclick() {
+  const searchInput = document.querySelector('.search-input').value;
+  const selectedBrand = document.querySelector('input[name="Brand"]:checked');
+  const selectedPrice = document.querySelector('input[name="price"]:checked');
+  const selectedColor = document.querySelector('input[name="Color"]:checked');
+
+  let brandValue = '';
+  let priceMin = 0;
+  let priceMax = 200;
+  let colorId = '';
+
+  if (selectedBrand) {
+    brandValue = selectedBrand.value;
+  }
+
+  if (selectedPrice) {
+    switch (selectedPrice.value) {
+      case '2k':
+        priceMax = 2000;
+        break;
+      case '4k':
+        priceMin = 2000;
+        priceMax = 4000;
+        break;
+      case '6k':
+        priceMin = 4000;
+        priceMax = 6000;
+        break;
+      // Add more cases for different price ranges if needed
+      default:
+        break;
+    }
+  }
+
+  if (selectedColor) {
+    // Assign colorId based on the selected color
+    switch (selectedColor.value) {
+      case 'black':
+        colorId = 3;
+        break;
+      case 'white':
+        colorId = 2;
+        break;
+      case 'red':
+        colorId = 1;
+        break;
+      // Add more cases for different colors if needed
+      default:
+        break;
+    }
+  }
+
+  // Construct the URL based on the presence of values
+  let url = '/result?';
+  if (searchInput.trim() !== '') {
+    url += `name=${searchInput}&`;
+  }
+  if (priceMin !== 0 || priceMax !== 200) {
+    url += `min=${priceMin}&max=${priceMax}&`;
+  }
+  if (colorId !== '') {
+    url += `colorid=${colorId}&`;
+  }
+  if (brandValue !== '') {
+    url += `type=${brandValue}`;
+  }
+
+  // Remove trailing '&' if it exists
+  if (url.endsWith('&')) {
+    url = url.slice(0, -1);
+  }
+
+  window.location.href = url;
+}
+
+  function fetchDataFromURL() {
+    // Get the current URL
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Extract query parameters
+const name = urlParams.get('name');
+const min = urlParams.get('min');
+const max = urlParams.get('max');
+const colorid = urlParams.get('colorid');
+const type = urlParams.get('type');
+
+// Check if variables are defined and not empty
+const nameParam = name ? `name=${name}` : '';
+const minParam = min ? `min=${min}` : '';
+const maxParam = max ? `max=${max}` : '';
+const coloridParam = colorid ? `colorid=${colorid}` : '';
+const typeParam = type ? `type=${type}` : '';
+
+// Construct the URL with the parameters
+const apiUrl = `/api/filter?${[nameParam, minParam, maxParam, coloridParam, typeParam].filter(param => param !== '').join('&')}`;
+    
+    // Fetch data using the constructed URL
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data.products);
+        const prodcuts = data.products;
+        const listItem = document.getElementById('list-item');
+        console.log(prodcuts);
+        prodcuts.forEach(product => {
+          const productDiv = document.createElement('div');
+          productDiv.classList.add('col-3', 'd-flex', 'justify-content-center', 'align-items-center');
+          productDiv.innerHTML = `
+          <a id="${product.product_id}" href="/product?id=${product.product_id}">
+            <div>
+              <img src="${product.image || "red1.png"}">
+              <h4>${product.product_name}</h4>
+              <p>${product.price} THB</p>
+            </div>
+          </a>
+          `;
+          listItem.appendChild(productDiv);
+        });
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+  }
+
+  // Call the function to fetch data using the parameters from the URL
+  fetchDataFromURL();
+
+</script>
+
+
+</html>

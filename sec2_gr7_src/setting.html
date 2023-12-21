@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="product.css" />
+</head>
+
+<body>
+  <div id="navbar">
+    <div id="logo">
+      <img src="pannmbg.png" width="125px">
+    </div>
+    <nav>
+      <ul>
+      </ul>
+    </nav>
+  </div>
+  <main class="container">
+
+    <div class="left-column">
+      <img data-image="Black" src="black-t.png" alt="">
+      <img data-image="blue" src="blue-t.png" alt="">
+      <img data-image="red" class="active" src="red-t.png" alt="">
+    </div>
+
+    <div class="right-column">
+
+      <div class="product-description">
+        <button class="edit">&#129691;</button>
+        <select name="edit">
+            <option value="option1">เปลี่ยนรูป</option>
+            <option value="option2">เปลี่ยนชื่อสินค้า</option>
+            <option value="option3">เปลี่ยน description</option>
+          </select>
+        <span>Black T-Shirts</span>
+        <h1>PANNM First Edition</h1>
+        <p>เป็นเสื้อยืด collection เเรกของ PANNM ที่มาพร้อมกับความเรียบง่ายใส่ได้ทุกสถานที่เเละ
+          มีเนื้อผ้าที่มีคว่มใส่สบายเเละยืดหยุ่น คุณภาพดีทำจากผ้า cotton 100%</p>
+      </div>
+
+      <div class="product-configuration">
+
+        <div class="product-color">
+          <span>Color</span>
+
+          <div class="color-choose">
+            <div>
+              <input data-image="red" type="product" id="red" name="color" value="red" checked>
+              <label for="red"><span></span></label>
+            </div>
+            <div>
+              <input data-image="blue" type="product" id="blue" name="color" value="blue">
+              <label for="blue"><span></span></label>
+            </div>
+            <div>
+              <input data-image="black" type="product" id="black" name="color" value="black">
+              <label for="black"><span></span></label>
+            </div>
+            <button class="edit">&#129691;</button>
+            <select name="edit">
+                <option value="option1">เพิ่มสี</option>
+                <option value="option2">ลดสี</option>
+                <option value="option3">เปลี่ยนสี</option>
+              </select>
+          </div>
+          <div class="product-price">
+            <span>200 บาท</span>
+            <button class="edit">&#129691;</button>
+            <select name="edit">
+                <option value="option1">เปลี่ยนราคา</option>
+              </select>
+            <a href="#" class="cart-btn">Add to cart</a>
+          </div>
+        </div>
+  </main>
+</body>
+<footer>
+  <a href="product" class="button">Back</a>
+</footer>
+</html>
